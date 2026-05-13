@@ -1,4 +1,4 @@
-# Radar Instagram DICOM - v8.5 (Google + Bing + Pente Fino)
+# Radar Instagram DICOM - v8.6 (Debug Edition)
 import os
 import requests
 import pandas as pd
@@ -38,16 +38,15 @@ def parse_relative_date(date_str):
     if not date_str: return now
     date_str = date_str.lower()
     try:
-        if 'minute' in date_str or 'hour' in date_str or 'minuto' in date_str or 'hora' in date_str: return now
-        if 'ago' in date_str or 'atrás' in date_str:
+        if any(x in date_str for x in ['minute', 'hour', 'minuto', 'hora']): return now
+        if any(x in date_str for x in ['ago', 'atrás', 'atras']):
             num_match = re.search(r'\d+', date_str)
             if num_match:
                 n = int(num_match.group())
-                if 'day' in date_str or 'dia' in date_str: return now - timedelta(days=n)
-                elif 'week' in date_str or 'semana' in date_str: return now - timedelta(weeks=n)
-                elif 'month' in date_str or 'mês' in date_str: return now - timedelta(days=n*30)
+                if any(x in date_str for x in ['day', 'dia']): return now - timedelta(days=n)
+                elif any(x in date_str for x in ['week', 'semana']): return now - timedelta(weeks=n)
+                elif any(x in date_str for x in ['month', 'mês', 'mes']): return now - timedelta(days=n*30)
         
-        # Tenta formatos comuns
         for fmt in ('%d/%m/%Y', '%Y-%m-%d', '%b %d, %Y', '%d de %b de %Y'):
             try: return datetime.strptime(date_str, fmt)
             except: continue
@@ -57,31 +56,38 @@ def parse_relative_date(date_str):
     except: return now
 
 def get_data_serper(username):
-    if not API_KEY: return []
+    if not API_KEY: 
+        print("AVISO: API_SRAPER_KEY não encontrada.")
+        return []
     url = "https://google.serper.dev/search"
-    # Busca focada em posts e reels
-    query = f"site:instagram.com \"@{username}\""
+    # Query ampliada para capturar mais resultados
+    query = f"site:instagram.com \"{username}\""
+    print(f"  [Serper] Buscando: {query}")
     payload = json.dumps({"q": query, "num": 40, "tbs": "qdr:w"})
     headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
     
     try:
         response = requests.post(url, headers=headers, data=payload, timeout=30)
-        return response.json().get('organic', [])
+        results = response.json().get('organic', [])
+        print(f"  [Serper] {len(results)} resultados brutos encontrados.")
+        return results
     except Exception as e:
         print(f"Erro no Serper (@{username}): {e}")
         return []
 
 def get_data_bing(username):
     """Busca no Bing como alternativa/complemento"""
-    # Query focada em posts
-    query = f"site:instagram.com/p/ \"{username}\" OR site:instagram.com/reels/ \"{username}\""
-    url = f"https://www.bing.com/search?q={query}"
+    query = f"site:instagram.com \"{username}\""
+    print(f"  [Bing] Buscando: {query}")
+    url = f"https://www.bing.com/search?q={query.replace(' ', '+')}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
     }
     try:
         response = requests.get(url, headers=headers, timeout=30)
-        if response.status_code != 200: return []
+        if response.status_code != 200: 
+            print(f"  [Bing] Erro HTTP {response.status_code}")
+            return []
         
         soup = BeautifulSoup(response.text, 'html.parser')
         results = []
@@ -91,21 +97,16 @@ def get_data_bing(username):
             if not link_tag: continue
             link = link_tag.get('href', '')
             
-            # Filtra apenas links de posts/reels
-            if any(x in link for x in ['/p/', '/reels/', '/reel/']):
+            if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
                 snippet_tag = item.select_one('.b_caption p') or item.select_one('.st')
                 snippet = snippet_tag.get_text() if snippet_tag else ""
-                
-                # Tenta achar uma data no snippet
-                date_str = ""
-                date_match = re.search(r'(\d{1,2} [a-z]{3} \d{4}|\d{1,2}/\d{1,2}/\d{4})', snippet.lower())
-                if date_match: date_str = date_match.group(1)
                 
                 results.append({
                     'link': link,
                     'snippet': snippet,
-                    'date': date_str
+                    'date': ""
                 })
+        print(f"  [Bing] {len(results)} resultados encontrados.")
         return results
     except Exception as e:
         print(f"Erro no Bing (@{username}): {e}")
@@ -143,9 +144,13 @@ def salvar_post(item, campus, user, existentes):
     if not shortcode or shortcode in existentes: 
         return False
 
-    dt_objeto = parse_relative_date(item.get('date', ''))
+    date_str = item.get('date', '')
+    dt_objeto = parse_relative_date(date_str)
     
-    # FILTRO DE DATA
+    # Se não houver data, assumimos que é novo (hoje) para garantir a captura
+    if not date_str:
+        dt_objeto = datetime.now()
+
     if dt_objeto < DATA_INICIO_MEMORIAL:
         return False
 
@@ -165,7 +170,6 @@ def salvar_post(item, campus, user, existentes):
     
     if os.path.exists(nome_arq):
         df_atual = pd.read_csv(nome_arq)
-        # Se o primeiro for placeholder, substitui
         if not df_atual.empty and str(df_atual.iloc[0]['shortcode']) == "placeholder":
             pd.DataFrame([registro]).to_csv(nome_arq, index=False, header=True, encoding='utf-8-sig', quoting=1)
         else:
@@ -188,24 +192,20 @@ def gerar_metricas():
                         if not df_temp.empty: list_df.append(df_temp)
                     except: continue
     
-    if not list_df: return
+    if not list_df:
+        print("AVISO: Nenhum dado de postagens encontrado para gerar métricas.")
+        return
     
     df = pd.concat(list_df, ignore_index=True)
     df['data_dt'] = pd.to_datetime(df['data'], format='%d/%m/%Y %H:%M', errors='coerce')
     df = df.dropna(subset=['data_dt'])
-    
-    # Ordenar por data
     df = df.sort_values('data_dt', ascending=False)
     
-    # Posts por dia (últimos 30 dias para o gráfico de ritmo)
     hoje = datetime.now()
     trinta_dias_atras = hoje - timedelta(days=30)
     ritmo_df = df[df['data_dt'] >= trinta_dias_atras]
     ritmo = ritmo_df.groupby(ritmo_df['data_dt'].dt.date).size().to_dict()
-    # Converte chaves para string para o JSON
     ritmo = {str(k): v for k, v in ritmo.items()}
-
-    # Posts por mês
     mensal = df.groupby(df['data_dt'].dt.strftime('%Y-%m')).size().to_dict()
 
     stats = {
@@ -232,10 +232,11 @@ def gerar_metricas():
         
     with open('metricas.json', 'w', encoding='utf-8') as f:
         json.dump(stats, f, ensure_ascii=False, indent=4)
+    print("Métricas geradas com sucesso.")
 
 def executar():
-    print(f"--- Radar DICOM v8.5 (Google + Bing) ---")
-    print(f"Buscando posts de {DATA_INICIO_MEMORIAL.strftime('%d/%m/%Y')} em diante ({DIAS_BUSCA} dias)...")
+    print(f"--- Radar DICOM v8.6 (Debug Mode) ---")
+    print(f"Buscando posts de {DATA_INICIO_MEMORIAL.strftime('%d/%m/%Y')} em diante...")
     
     existentes = set()
     if os.path.exists("data"):
@@ -247,12 +248,11 @@ def executar():
                         existentes.update(df_ex['shortcode'].astype(str).tolist())
                     except: continue
     
+    print(f"Total de posts já conhecidos: {len(existentes)}")
+
     for campus, user in PERFIS.items():
-        print(f"Verificando @{user}...")
-        
-        # Busca no Google (Serper)
+        print(f"\nVerificando @{user} ({campus})...")
         res_google = get_data_serper(user)
-        # Busca no Bing
         res_bing = get_data_bing(user)
         
         resultados = res_google + res_bing
@@ -262,8 +262,8 @@ def executar():
                 novos += 1
         
         garantir_arquivo_existente(campus, user)
-        print(f"  -> {novos} novos posts únicos encontrados.")
-        time.sleep(2) # Pausa amigável
+        print(f"  -> {novos} novos posts únicos salvos.")
+        time.sleep(2)
 
     gerar_metricas()
 
