@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Social DICOM — IF Baiano</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #27ae60; --green-dark: #1e8449; --green-light: #d5f0e0;
+            --navy: #1a252f; --bg: #f0f4f2; --surface: #ffffff; --border: #e2e8e4;
+            --text-main: #1a252f; --text-muted: #96a89e; --sidebar-w: 300px;
+            --radius-md: 14px; --shadow-sm: 0 1px 4px rgba(0,0,0,.06);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-w); background: var(--navy); color: white; padding: 20px; position: fixed; height: 100vh; }
+        .main { margin-left: var(--sidebar-w); flex: 1; padding: 30px; }
+        .topbar-title { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .v-badge { background: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .campus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .campus-card { background: var(--surface); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .campus-card img { width: 100%; height: 160px; object-fit: cover; background: #eee; }
+        .campus-card-body { padding: 15px; }
+        .campus-card-body h3 { font-size: 1rem; margin-bottom: 5px; }
+        .campus-handle { color: var(--green); font-size: 0.8rem; font-weight: bold; }
+        .campus-caption { font-size: 0.85rem; color: #666; margin-top: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .empty-state { grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2 style="font-size: 1.2rem; margin-bottom: 20px;">IF Baiano</h2>
+        <p style="font-size: 0.8rem; color: #888;">Radar Social DICOM</p>
+        <hr style="margin: 20px 0; opacity: 0.1;">
+        <div id="rankingList"></div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar-title">
+            <h1>Painel de Postagens</h1>
+            <span class="v-badge">v6.1</span>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card"><strong>📋 <span id="totalPosts">0</span></strong><br><small>Total de Posts</small></div>
+            <div class="stat-card"><strong>🗓️ <span id="bestDay">—</span></strong><br><small>Dia de Pico</small></div>
+            <div class="stat-card"><strong>📡 15</strong><br><small>Campi Ativos</small></div>
+        </div>
+
+        <h2 style="font-size: 1rem; margin-bottom: 15px;">Últimas Postagens por Campus</h2>
+        <div class="campus-grid" id="latestPostsGrid">
+            <div class="empty-state">Carregando dados...</div>
+        </div>
+    </main>
+
+    <script>
+        const CAMPUS_LIST = ["Reitoria","Alagoinhas","Bom_Jesus_da_Lapa","Catu","Governador_Mangabeira","Guanambi","Itaberaba","Itapetinga","Santa_Inês","Senhor_do_Bonfim","Serrinha","Teixeira_de_Freitas","Uruçuca","Valença","Xique_Xique"];
+
+        async function init() {
+            try {
+                const resp = await fetch('metricas.json');
+                if (resp.ok) {
+                    const d = await resp.json();
+                    document.getElementById('totalPosts').textContent = d.total_posts || 0;
+                    document.getElementById('bestDay').textContent = d.dia_mais_produtivo || '—';
+                }
+            } catch(e) { console.warn("Sem métricas"); }
+            loadPosts();
+        }
+
+        async function loadPosts() {
+            const grid = document.getElementById('latestPostsGrid');
+            const year = new Date().getFullYear();
+            let html = '';
+            let loaded = 0;
+
+            for (const campus of CAMPUS_LIST) {
+                try {
+                    const response = await fetch(`./${campus}_${year}.csv`);
+                    if (!response.ok) continue;
+                    const text = await response.text();
+                    const lines = text.split('\n').filter(l => l.trim());
+                    if (lines.length <= 1) continue;
+
+                    const parts = lines[lines.length-1].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    const c = parts.map(p => p.replace(/^"|"$/g, ''));
+                    
+                    html += `
+                        <div class="campus-card">
+                            <img src="${c[6]}" onerror="this.src='https://placehold.co/400x300/27ae60/white?text=${campus}'">
+                            <div class="campus-card-body">
+                                <h3>${c[0].replace(/_/g,' ')}</h3>
+                                <p class="campus-handle">@${c[1]}</p>
+                                <p class="campus-caption">${c[4] || ''}</p>
+                                <p style="font-size:0.7rem; color:#999; margin-top:10px;">📅 ${c[3].split(' ')[0]}</p>
+                                <a href="${c[5]}" target="_blank" style="color:var(--green); font-size:0.8rem; text-decoration:none; font-weight:bold; display:block; margin-top:10px;">Ver no Instagram →</a>
+                            </div>
+                        </div>`;
+                    loaded++;
+                } catch(e) {}
+            }
+            grid.innerHTML = loaded > 0 ? html : '<div class="empty-state"><p>Nenhum dado encontrado.<br>O robô precisa rodar no GitHub primeiro.</p></div>';
+        }
+        init();
+    </script>
+</body>
+</html>
