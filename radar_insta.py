@@ -72,48 +72,42 @@ def parse_relative_date(date_str):
 
 def get_data_serper(username):
     if not API_KEY: 
-        print(f"AVISO: Chave API_SERPER_KEY não configurada!")
+        print("AVISO: API_SERPER_KEY não encontrada.")
         return []
-    
     url = "https://google.serper.dev/search"
-    data_str_google = DATA_INICIO_MEMORIAL.strftime('%Y-%m-%d')
     
-    # Queries simplificadas para máxima compatibilidade
-    queries = [
-        f'"{username}" site:instagram.com/p/ after:{data_str_google}',
-        f'"{username}" site:instagram.com/reels/ after:{data_str_google}'
-    ]
+    # Filtro de tempo do Google: qdr:y (último ano) ou qdr:m (último mês)
+    time_filter = "qdr:y" if DIAS_BUSCA > 31 else "qdr:m"
+    
+    # Query básica e estável
+    query = f'site:instagram.com "{username}"'
+    print(f"  [Serper] {query} ({time_filter})...")
     
     all_results = []
     headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
     
-    for query in queries:
-        for page in range(1, 4):
-            print(f"  [Serper] {query} (Pág {page})...")
-            # num: 40 é mais estável que 100
-            payload = json.dumps({"q": query, "num": 40, "page": page})
-            try:
-                response = requests.post(url, headers=headers, data=payload, timeout=30)
-                data = response.json()
-                
-                # Log de erro da API se existir
-                if "error" in data:
-                    print(f"  [Serper] Erro na API: {data['error']}")
-                    break
-                    
-                results = data.get('organic', [])
-                if not results: 
-                    print(f"  [Serper] Fim dos resultados na página {page}.")
-                    break
-                
-                all_results.extend(results)
-                if len(results) < 10: break # Poucos resultados, não deve ter próxima página
-                time.sleep(1)
-            except Exception as e:
-                print(f"  [Serper] Erro de conexão: {e}")
-                break
+    # Tentamos apenas 2 páginas para não "cansar" o buscador e evitar bloqueios
+    for page in [1, 2]:
+        payload = json.dumps({
+            "q": query, 
+            "num": 40, 
+            "page": page,
+            "tbs": time_filter
+        })
+        try:
+            response = requests.post(url, headers=headers, data=payload, timeout=30)
+            data = response.json()
+            results = data.get('organic', [])
+            if not results: break
             
-    print(f"  [Serper] {len(all_results)} resultados totais.")
+            all_results.extend(results)
+            if len(results) < 10: break
+            time.sleep(1)
+        except Exception as e:
+            print(f"  [Serper] Erro: {e}")
+            break
+            
+    print(f"  [Serper] {len(all_results)} resultados encontrados.")
     return all_results
 
 def get_data_bing(username):
