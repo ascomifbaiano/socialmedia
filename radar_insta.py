@@ -72,40 +72,48 @@ def parse_relative_date(date_str):
 
 def get_data_serper(username):
     if not API_KEY: 
-        print("AVISO: API_SERPER_KEY não encontrada.")
+        print(f"AVISO: Chave API_SERPER_KEY não configurada!")
         return []
-    url = "https://google.serper.dev/search"
     
+    url = "https://google.serper.dev/search"
     data_str_google = DATA_INICIO_MEMORIAL.strftime('%Y-%m-%d')
     
-    # Queries diversificadas para maximizar o alcance
+    # Queries simplificadas para máxima compatibilidade
     queries = [
-        f"site:instagram.com/{username}/p/ after:{data_str_google}",
-        f"site:instagram.com/{username}/reels/ after:{data_str_google}"
+        f'"{username}" site:instagram.com/p/ after:{data_str_google}',
+        f'"{username}" site:instagram.com/reels/ after:{data_str_google}'
     ]
     
     all_results = []
     headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
     
     for query in queries:
-        # PAGINAÇÃO: O Google limita os resultados por página. 
-        # Vamos pedir até 3 páginas de 100 resultados cada para garantir o histórico.
         for page in range(1, 4):
-            print(f"  [Serper] Buscando (Pág {page}): {query}")
-            payload = json.dumps({"q": query, "num": 100, "page": page})
+            print(f"  [Serper] {query} (Pág {page})...")
+            # num: 40 é mais estável que 100
+            payload = json.dumps({"q": query, "num": 40, "page": page})
             try:
                 response = requests.post(url, headers=headers, data=payload, timeout=30)
-                results = response.json().get('organic', [])
-                if not results: break
+                data = response.json()
+                
+                # Log de erro da API se existir
+                if "error" in data:
+                    print(f"  [Serper] Erro na API: {data['error']}")
+                    break
+                    
+                results = data.get('organic', [])
+                if not results: 
+                    print(f"  [Serper] Fim dos resultados na página {page}.")
+                    break
                 
                 all_results.extend(results)
-                if len(results) < 50: break # Se veio pouco, não tem próxima página
+                if len(results) < 10: break # Poucos resultados, não deve ter próxima página
                 time.sleep(1)
             except Exception as e:
-                print(f"Erro no Serper (Pág {page}): {e}")
+                print(f"  [Serper] Erro de conexão: {e}")
                 break
             
-    print(f"  [Serper] {len(all_results)} resultados brutos encontrados.")
+    print(f"  [Serper] {len(all_results)} resultados totais.")
     return all_results
 
 def get_data_bing(username):
