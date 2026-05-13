@@ -76,38 +76,39 @@ def get_data_serper(username):
         return []
     url = "https://google.serper.dev/search"
     
-    # Filtro de tempo do Google: qdr:y (último ano) ou qdr:m (último mês)
-    time_filter = "qdr:y" if DIAS_BUSCA > 31 else "qdr:m"
-    
-    # Query básica e estável
-    query = f'site:instagram.com "{username}"'
-    print(f"  [Serper] {query} ({time_filter})...")
+    # Em vez de site:, vamos buscar pelo nome da unidade + instagram
+    # Isso é muito mais "natural" para o Google e traz mais resultados
+    query = f"Instagram {username} IF Baiano"
+    print(f"  [Serper] Pesquisando: {query}")
     
     all_results = []
     headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
     
-    # Tentamos apenas 2 páginas para não "cansar" o buscador e evitar bloqueios
-    for page in [1, 2]:
+    for page in [1, 2, 3]:
         payload = json.dumps({
             "q": query, 
             "num": 40, 
-            "page": page,
-            "tbs": time_filter
+            "page": page
         })
         try:
             response = requests.post(url, headers=headers, data=payload, timeout=30)
             data = response.json()
-            results = data.get('organic', [])
-            if not results: break
+            organic = data.get('organic', [])
+            if not organic: break
             
-            all_results.extend(results)
-            if len(results) < 10: break
+            # Filtramos manualmente apenas o que for link de post ou reel
+            for item in organic:
+                link = item.get('link', '')
+                if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
+                    all_results.append(item)
+            
+            if len(organic) < 10: break
             time.sleep(1)
         except Exception as e:
             print(f"  [Serper] Erro: {e}")
             break
             
-    print(f"  [Serper] {len(all_results)} resultados encontrados.")
+    print(f"  [Serper] {len(all_results)} posts filtrados de {username}.")
     return all_results
 
 def get_data_bing(username):
