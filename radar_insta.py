@@ -253,10 +253,64 @@ def gerar_metricas():
         json.dump(stats, f, ensure_ascii=False, indent=4)
     print("Métricas geradas com sucesso.")
 
+def get_data_serper_images(username):
+    """Busca no Serper Images, que costuma indexar fotos mais rápido que o Web Search"""
+    if not API_KEY: return []
+    url = "https://google.serper.dev/images"
+    query = f"site:instagram.com \"{username}\""
+    print(f"  [Serper Images] Buscando: {query}")
+    payload = json.dumps({"q": query, "num": 30})
+    headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
+
+    try:
+        response = requests.post(url, headers=headers, data=payload, timeout=30)
+        results = response.json().get('images', [])
+        formatted = []
+        for img in results:
+            link = img.get('link', '') # Link da página onde a imagem está
+            if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
+                formatted.append({
+                    'link': link,
+                    'snippet': img.get('title', ''),
+                    'date': "" # Imagens raramente têm data
+                })
+        print(f"  [Serper Images] {len(formatted)} posts encontrados via imagens.")
+        return formatted
+    except: return []
+
+def get_data_direct_guest(username):
+    """Tenta ler o perfil diretamente via 'Guest Browsing' (HTML público)"""
+    url = f"https://www.instagram.com/{username}/"
+    print(f"  [Direct] Acessando perfil: {url}")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    }
+    try:
+        response = requests.get(url, headers=headers, timeout=20)
+        if response.status_code != 200: return []
+
+        # O Instagram carrega os posts via JS, mas os últimos posts costumam 
+        # estar em meta tags ou em scripts de JSON (LD-JSON)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        results = []
+
+        # Tenta achar links de posts no HTML
+        links = re.findall(r'/(?:p|reels|reel)/([A-Za-z0-9_-]+)/', response.text)
+        for code in set(links):
+            results.append({
+                'link': f"https://www.instagram.com/p/{code}/",
+                'snippet': f"Post de @{username} (detectado via acesso direto)",
+                'date': datetime.now().strftime('%Y-%m-%d')
+            })
+        print(f"  [Direct] {len(results)} links detectados no perfil.")
+        return results
+    except: return []
+
 def executar():
-    print(f"--- Radar DICOM v8.6 (Debug Mode) ---")
+    print(f"--- Radar DICOM v8.8 (Modo Real-Time) ---")
     print(f"Buscando posts de {DATA_INICIO_MEMORIAL.strftime('%d/%m/%Y')} em diante...")
-    
+
     existentes = set()
     if os.path.exists("data"):
         for root, dirs, files in os.walk("data"):
@@ -266,25 +320,33 @@ def executar():
                         df_ex = pd.read_csv(os.path.join(root, f))
                         existentes.update(df_ex['shortcode'].astype(str).tolist())
                     except: continue
-    
+
     print(f"Total de posts já conhecidos: {len(existentes)}")
 
     for campus, user in PERFIS.items():
         print(f"\nVerificando @{user} ({campus})...")
+
+        # 1. Busca Orgânica (Google)
         res_google = get_data_serper(user)
+        # 2. Busca de Imagens (Mais rápido para indexar)
+        res_images = get_data_serper_images(user)
+        # 3. Busca no Bing
         res_bing = get_data_bing(user)
-        
-        resultados = res_google + res_bing
+        # 4. Acesso Direto (Real-time)
+        res_direct = get_data_direct_guest(user)
+
+        resultados = res_google + res_images + res_bing + res_direct
         novos = 0
         for item in resultados:
             if salvar_post(item, campus, user, existentes):
                 novos += 1
-        
+
         garantir_arquivo_existente(campus, user)
         print(f"  -> {novos} novos posts únicos salvos.")
-        time.sleep(2)
+        time.sleep(3) # Pausa estratégica
 
     gerar_metricas()
+
 
 if __name__ == "__main__":
     executar()
