@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 
 # Configurações
-API_KEY = os.environ.get("API_SRAPER_KEY")
+API_KEY = os.environ.get("API_SERPER_KEY")
 
 PERFIS = {
     "Reitoria": "ifbaiano",
