@@ -1,1 +1,35 @@
+name: Radar Instagram DICOM
 
+on:
+  schedule:
+    - cron: '0 12 * * *' # Roda uma vez por dia ao meio-dia
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Scraper
+        env:
+          API_SRAPER_KEY: ${{ secrets.API_SRAPER_KEY }}
+        run: python radar_insta.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Radar-DICOM-Bot"
+          git config --global user.email "bot@ifbaiano.edu.br"
+          git add *.csv 2>/dev/null || echo "Nenhum CSV para adicionar"
+          git add metricas.json 2>/dev/null || echo "Nenhum metrica para adicionar"
+          git commit -m "Auto-update: Dashboard & Memorial (v8.0 - Serper)" || exit 0
+          git push
