@@ -39,7 +39,7 @@ jobs:
       - name: Run Scraper
         if: github.event.inputs.action != 'clear_data'
         env:
-          API_SRAPER_KEY: ${{ secrets.API_SRAPER_KEY }}
+          API_SERPER_KEY: ${{ secrets.API_SERPER_KEY }}
         run: python radar_insta.py
 
       - name: Commit and Push
