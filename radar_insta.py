@@ -60,57 +60,76 @@ def get_data_serper(username):
         print("AVISO: API_SRAPER_KEY não encontrada.")
         return []
     url = "https://google.serper.dev/search"
-    # Query ampliada para capturar mais resultados
-    query = f"site:instagram.com \"{username}\""
-    print(f"  [Serper] Buscando: {query}")
-    payload = json.dumps({"q": query, "num": 40, "tbs": "qdr:w"})
+    
+    # Data no formato YYYY-MM-DD para o operador after:
+    data_str_google = DATA_INICIO_MEMORIAL.strftime('%Y-%m-%d')
+    
+    # Realizamos duas buscas por unidade: uma para posts e outra para reels
+    # Usando a sintaxe sugerida: site:instagram.com/perfil/p e site:instagram.com/perfil/reel
+    queries = [
+        f"site:instagram.com/{username}/p/ after:{data_str_google}",
+        f"site:instagram.com/{username}/reels/ after:{data_str_google}",
+        f"site:instagram.com/{username}/reel/ after:{data_str_google}"
+    ]
+    
+    all_results = []
     headers = {'X-API-KEY': API_KEY, 'Content-Type': 'application/json'}
     
-    try:
-        response = requests.post(url, headers=headers, data=payload, timeout=30)
-        results = response.json().get('organic', [])
-        print(f"  [Serper] {len(results)} resultados brutos encontrados.")
-        return results
-    except Exception as e:
-        print(f"Erro no Serper (@{username}): {e}")
-        return []
+    for query in queries:
+        print(f"  [Serper] Buscando: {query}")
+        payload = json.dumps({"q": query, "num": 20})
+        try:
+            response = requests.post(url, headers=headers, data=payload, timeout=30)
+            results = response.json().get('organic', [])
+            all_results.extend(results)
+            time.sleep(1) # Delay entre queries do mesmo perfil
+        except Exception as e:
+            print(f"Erro no Serper query '{query}': {e}")
+            
+    print(f"  [Serper] {len(all_results)} resultados totais encontrados.")
+    return all_results
 
 def get_data_bing(username):
-    """Busca no Bing como alternativa/complemento"""
-    query = f"site:instagram.com \"{username}\""
-    print(f"  [Bing] Buscando: {query}")
-    url = f"https://www.bing.com/search?q={query.replace(' ', '+')}"
+    """Busca no Bing usando sintaxe de precisão"""
+    # Data para o Bing (formato aproximado no snippet ou query se suportado)
+    queries = [
+        f"site:instagram.com/{username}/p/",
+        f"site:instagram.com/{username}/reels/"
+    ]
+    
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
     }
-    try:
-        response = requests.get(url, headers=headers, timeout=30)
-        if response.status_code != 200: 
-            print(f"  [Bing] Erro HTTP {response.status_code}")
-            return []
-        
-        soup = BeautifulSoup(response.text, 'html.parser')
-        results = []
-        
-        for item in soup.select('.b_algo'):
-            link_tag = item.select_one('h2 a')
-            if not link_tag: continue
-            link = link_tag.get('href', '')
+    
+    all_results = []
+    for query in queries:
+        print(f"  [Bing] Buscando: {query}")
+        url = f"https://www.bing.com/search?q={query.replace(' ', '+')}"
+        try:
+            response = requests.get(url, headers=headers, timeout=30)
+            if response.status_code != 200: continue
             
-            if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
-                snippet_tag = item.select_one('.b_caption p') or item.select_one('.st')
-                snippet = snippet_tag.get_text() if snippet_tag else ""
+            soup = BeautifulSoup(response.text, 'html.parser')
+            for item in soup.select('.b_algo'):
+                link_tag = item.select_one('h2 a')
+                if not link_tag: continue
+                link = link_tag.get('href', '')
                 
-                results.append({
-                    'link': link,
-                    'snippet': snippet,
-                    'date': ""
-                })
-        print(f"  [Bing] {len(results)} resultados encontrados.")
-        return results
-    except Exception as e:
-        print(f"Erro no Bing (@{username}): {e}")
-        return []
+                if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
+                    snippet_tag = item.select_one('.b_caption p') or item.select_one('.st')
+                    snippet = snippet_tag.get_text() if snippet_tag else ""
+                    
+                    all_results.append({
+                        'link': link,
+                        'snippet': snippet,
+                        'date': ""
+                    })
+            time.sleep(1)
+        except Exception as e:
+            print(f"Erro no Bing query '{query}': {e}")
+            
+    print(f"  [Bing] {len(all_results)} resultados encontrados.")
+    return all_results
 
 def garantir_arquivo_existente(campus, user):
     ano = datetime.now().year
