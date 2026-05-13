@@ -29,9 +29,24 @@ PERFIS = {
     "Xique_Xique": "ifbaiano.xiquexique"
 }
 
-# DATA DE CORTE DINÂMICA: 7 dias atrás
-DIAS_BUSCA = 7
-DATA_INICIO_MEMORIAL = datetime.now() - timedelta(days=DIAS_BUSCA)
+# DATA DE CORTE DINÂMICA
+def calcular_data_inicio():
+    # Se a pasta data não existe ou está vazia, é a primeira execução (1 ano)
+    primeira_vez = True
+    if os.path.exists("data"):
+        for root, dirs, files in os.walk("data"):
+            if any(f.endswith('.csv') for f in files):
+                primeira_vez = False
+                break
+    
+    if primeira_vez:
+        print("!!! Primeira execução detectada: Buscando histórico de 1 ano !!!")
+        return datetime.now() - timedelta(days=365), 365
+    else:
+        print("--- Atualização diária: Buscando posts dos últimos 30 dias ---")
+        return datetime.now() - timedelta(days=30), 30
+
+DATA_INICIO_MEMORIAL, DIAS_BUSCA = calcular_data_inicio()
 
 def parse_relative_date(date_str):
     now = datetime.now()
