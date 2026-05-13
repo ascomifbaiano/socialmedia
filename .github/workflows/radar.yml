@@ -2,8 +2,17 @@ name: Radar Instagram DICOM
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Roda uma vez por dia ao meio-dia
+    - cron: '0 12 * * *'
   workflow_dispatch:
+    inputs:
+      action:
+        description: 'Ação para executar'
+        required: true
+        default: 'run'
+        type: choice
+        options:
+          - run
+          - clear_data
 
 jobs:
   build:
@@ -20,7 +29,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Clear Data (Optional)
+        if: github.event.inputs.action == 'clear_data'
+        run: |
+          rm -f *.csv
+          rm -f metricas.json
+          echo "Arquivos removidos"
+
       - name: Run Scraper
+        if: github.event.inputs.action != 'clear_data'
         env:
           API_SRAPER_KEY: ${{ secrets.API_SRAPER_KEY }}
         run: python radar_insta.py
@@ -29,7 +46,17 @@ jobs:
         run: |
           git config --global user.name "Radar-DICOM-Bot"
           git config --global user.email "bot@ifbaiano.edu.br"
-          git add *.csv 2>/dev/null || echo "Nenhum CSV para adicionar"
-          git add metricas.json 2>/dev/null || echo "Nenhum metrica para adicionar"
-          git commit -m "Auto-update: Dashboard & Memorial (v8.0 - Serper)" || exit 0
+          git add *.csv 2>/dev/null || echo ""
+          git add metricas.json 2>/dev/null || echo ""
+          
+          # Se for clear_data, precisamos remover os arquivos do git também
+          if [ "${{ github.event.inputs.action }}" == "clear_data" ]; then
+            git rm *.csv 2>/dev/null || echo ""
+            git rm metricas.json 2>/dev/null || echo ""
+            msg="Limpeza: Reset de banco de dados"
+          else
+            msg="Auto-update: Dashboard & Memorial (v8.5)"
+          fi
+          
+          git commit -m "$msg" || exit 0
           git push
