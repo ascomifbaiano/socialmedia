@@ -236,7 +236,7 @@
 
             for (const unit of unitsToLoad) {
                 try {
-                    const resp = await fetch(`${unit}_${year}.csv`);
+                    const resp = await fetch(`data/${unit}/${unit}_${year}.csv`);
                     if (!resp.ok) continue;
                     const text = await resp.text();
                     const lines = text.split('\n').slice(1).filter(l => l.trim());

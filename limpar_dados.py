@@ -1,28 +1,38 @@
 import os
-import glob
+import shutil
 
 def cleanup():
     print("--- Iniciando Limpeza de Dados ---")
     
-    # Lista todos os arquivos CSV (campi) e o JSON de métricas
-    arquivos_csv = glob.glob("*.csv")
+    # Pasta principal de dados e JSON de métricas
+    pasta_data = "data"
     metricas = "metricas.json"
     
-    files_to_delete = arquivos_csv + ([metricas] if os.path.exists(metricas) else [])
+    removidos = 0
     
-    if not files_to_delete:
-        print("Nenhum arquivo de dados encontrado para deletar.")
-        return
-
-    for f in files_to_delete:
+    if os.path.exists(pasta_data):
         try:
-            os.remove(f)
-            print(f"Removido: {f}")
+            shutil.rmtree(pasta_data)
+            print(f"Diretório '{pasta_data}/' removido com sucesso.")
+            removidos += 1
         except Exception as e:
-            print(f"Erro ao remover {f}: {e}")
+            print(f"Erro ao remover diretório {pasta_data}: {e}")
             
-    print(f"\nTotal de {len(files_to_delete)} arquivos removidos.")
-    print("O repositório está limpo localmente. Para limpar no GitHub, faça um commit das exclusões.")
+    if os.path.exists(metricas):
+        try:
+            os.remove(metricas)
+            print(f"Arquivo '{metricas}' removido.")
+            removidos += 1
+        except Exception as e:
+            print(f"Erro ao remover {metricas}: {e}")
+            
+    if removidos == 0:
+        print("Nenhum dado encontrado para limpar.")
+    else:
+        print(f"\nLimpeza concluída. {removidos} itens principais removidos.")
+
+if __name__ == "__main__":
+    cleanup()
 
 if __name__ == "__main__":
     cleanup()

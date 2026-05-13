@@ -114,7 +114,10 @@ def get_data_bing(username):
 def garantir_arquivo_existente(campus, user):
     ano = datetime.now().year
     campus_limpo = campus.replace(' ', '_').replace('-', '_')
-    nome_arq = f"{campus_limpo}_{ano}.csv"
+    diretorio = os.path.join("data", campus_limpo)
+    os.makedirs(diretorio, exist_ok=True)
+    
+    nome_arq = os.path.join(diretorio, f"{campus_limpo}_{ano}.csv")
     if not os.path.exists(nome_arq):
         registro = {
             "campus": campus, "unidade": user, "shortcode": "placeholder",
@@ -147,7 +150,10 @@ def salvar_post(item, campus, user, existentes):
         return False
 
     campus_limpo = campus.replace(' ', '_').replace('-', '_')
-    nome_arq = f"{campus_limpo}_{dt_objeto.year}.csv"
+    diretorio = os.path.join("data", campus_limpo)
+    os.makedirs(diretorio, exist_ok=True)
+    
+    nome_arq = os.path.join(diretorio, f"{campus_limpo}_{dt_objeto.year}.csv")
     
     registro = {
         "campus": campus, "unidade": user, "shortcode": shortcode,
@@ -171,15 +177,17 @@ def salvar_post(item, campus, user, existentes):
     return True
 
 def gerar_metricas():
-    arquivos = [f for f in os.listdir() if '.csv' in f and '_' in f]
-    if not arquivos: return
     list_df = []
-    for f in arquivos:
-        try:
-            df_temp = pd.read_csv(f)
-            df_temp = df_temp[df_temp['shortcode'].astype(str) != 'placeholder']
-            if not df_temp.empty: list_df.append(df_temp)
-        except: continue
+    if os.path.exists("data"):
+        for root, dirs, files in os.walk("data"):
+            for f in files:
+                if f.endswith('.csv'):
+                    try:
+                        df_temp = pd.read_csv(os.path.join(root, f))
+                        df_temp = df_temp[df_temp['shortcode'].astype(str) != 'placeholder']
+                        if not df_temp.empty: list_df.append(df_temp)
+                    except: continue
+    
     if not list_df: return
     
     df = pd.concat(list_df, ignore_index=True)
@@ -230,12 +238,14 @@ def executar():
     print(f"Buscando posts de {DATA_INICIO_MEMORIAL.strftime('%d/%m/%Y')} em diante ({DIAS_BUSCA} dias)...")
     
     existentes = set()
-    for f in os.listdir():
-        if f.endswith('.csv') and '_' in f:
-            try: 
-                df_ex = pd.read_csv(f)
-                existentes.update(df_ex['shortcode'].astype(str).tolist())
-            except: continue
+    if os.path.exists("data"):
+        for root, dirs, files in os.walk("data"):
+            for f in files:
+                if f.endswith('.csv'):
+                    try: 
+                        df_ex = pd.read_csv(os.path.join(root, f))
+                        existentes.update(df_ex['shortcode'].astype(str).tolist())
+                    except: continue
     
     for campus, user in PERFIS.items():
         print(f"Verificando @{user}...")
