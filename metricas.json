@@ -1,7 +1,7 @@
 {
-    "atualizado_em": "24/05/2026 15:50",
-    "total_posts": 292,
-    "total_mes_atual": 122,
+    "atualizado_em": "25/05/2026 18:13",
+    "total_posts": 293,
+    "total_mes_atual": 123,
     "ranking": {
         "Itapetinga": 32,
         "Uruçuca": 28,
@@ -12,15 +12,14 @@
         "Catu": 22,
         "Alagoinhas": 21,
         "Santa_Inês": 21,
+        "Valença": 18,
         "Serrinha": 17,
-        "Valença": 17,
         "Itaberaba": 16,
         "Reitoria": 9,
         "Governador_Mangabeira": 9,
         "Senhor_do_Bonfim": 1
     },
     "ritmo_publicacao": {
-        "2026-04-25": 9,
         "2026-04-27": 3,
         "2026-04-28": 4,
         "2026-04-29": 3,
@@ -48,7 +47,8 @@
         "2026-05-21": 9,
         "2026-05-22": 5,
         "2026-05-23": 4,
-        "2026-05-24": 3
+        "2026-05-24": 3,
+        "2026-05-25": 1
     },
     "mensal": {
         "2025-05": 3,
@@ -63,7 +63,7 @@
         "2026-02": 14,
         "2026-03": 23,
         "2026-04": 67,
-        "2026-05": 119
+        "2026-05": 120
     },
     "dias_produtivos": {
         "2": 57,
@@ -71,25 +71,25 @@
         "4": 49,
         "1": 43,
         "5": 40,
-        "0": 32,
+        "0": 33,
         "6": 21
     },
     "inatividade": {
-        "Reitoria": 2,
-        "Alagoinhas": 1,
-        "Bom_Jesus_da_Lapa": 1,
-        "Catu": 0,
-        "Governador_Mangabeira": 3,
-        "Guanambi": 3,
-        "Itaberaba": 3,
-        "Itapetinga": 1,
-        "Santa_Inês": 2,
-        "Senhor_do_Bonfim": 0,
-        "Serrinha": 3,
-        "Teixeira_de_Freitas": 2,
-        "Uruçuca": 1,
-        "Valença": 1,
-        "Xique_Xique": 2
+        "Reitoria": 3,
+        "Alagoinhas": 2,
+        "Bom_Jesus_da_Lapa": 2,
+        "Catu": 1,
+        "Governador_Mangabeira": 4,
+        "Guanambi": 4,
+        "Itaberaba": 4,
+        "Itapetinga": 2,
+        "Santa_Inês": 3,
+        "Senhor_do_Bonfim": 1,
+        "Serrinha": 4,
+        "Teixeira_de_Freitas": 3,
+        "Uruçuca": 2,
+        "Valença": 0,
+        "Xique_Xique": 3
     },
     "dia_mais_produtivo": "Quarta"
 }
