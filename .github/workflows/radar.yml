@@ -17,6 +17,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -36,10 +38,6 @@ jobs:
           rm -f metricas.json
           echo "Dados removidos"
 
-      - name: Run Scraper
-        if: github.event.inputs.action != 'run' && github.event.inputs.action != 'clear_data' # fallback or just ignore
-        # we will handle run below
-        
       - name: Run Scraper Action
         if: github.event.inputs.action != 'clear_data'
         env:

@@ -16,13 +16,13 @@ PERFIS = {
     "Reitoria": "ifbaiano",
     "Alagoinhas": "ifbaiano_alagoinhas",
     "Bom_Jesus_da_Lapa": "ifbaiano_lapa",
-    "Catu": "ifbaianocampuscatu",
+    "Catu": "ifbaianocatu",
     "Governador_Mangabeira": "ifbaiano.govmangabeira",
     "Guanambi": "ifbaianoguanambi",
     "Itaberaba": "ifbaiano.itaberaba",
     "Itapetinga": "ifbaiano_itapetinga",
     "Santa_Inês": "ifbaiano.santaines",
-    "Senhor_do_Bonfim": "ifbainaobonfimoficial",
+    "Senhor_do_Bonfim": "ifbaianobonfimoficial",
     "Serrinha": "ifbaianoserrinha",
     "Teixeira_de_Freitas": "ifbaianoteixeiradefreitas",
     "Uruçuca": "ifbaiano_urucuca",
@@ -158,6 +158,7 @@ def get_data_bing(username):
                 link_tag = item.select_one('h2 a')
                 if not link_tag: continue
                 link = link_tag.get('href', '')
+                title_text = link_tag.get_text() if link_tag else ""
                 
                 if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
                     snippet_tag = item.select_one('.b_caption p') or item.select_one('.st')
@@ -165,6 +166,7 @@ def get_data_bing(username):
                     
                     all_results.append({
                         'link': link,
+                        'title': title_text,
                         'snippet': snippet,
                         'date': ""
                     })
@@ -258,6 +260,88 @@ def get_data_authenticated(username):
         print(f"  [Auth] Erro inesperado: {e}")
         return []
 
+def validar_autor_e_legenda(item, username):
+    """
+    Valida se o post realmente pertence ao usuário e limpa a legenda (evitando alucinações).
+    Retorna (valido, legenda_limpa)
+    """
+    link = item.get('link', '').lower()
+    title = item.get('title', '').lower()
+    snippet = item.get('snippet', '')
+    snippet_lower = snippet.lower()
+    
+    # 1. Se veio do método autenticado (Instagram oficial), é 100% confiável
+    if item.get('shortcode') and item.get('tipo') in ['Post', 'Reel', 'Story']:
+        return True, snippet
+
+    # 2. Variações do username para checagem flexível porém segura
+    u_clean = username.lower()
+    u_spaces = u_clean.replace('_', ' ').replace('.', ' ')
+    u_none = u_clean.replace('_', '').replace('.', '')
+    
+    usuario_mencionado = (
+        u_clean in link or u_clean in title or u_clean in snippet_lower or
+        u_spaces in title or u_spaces in snippet_lower or
+        u_none in title or u_none in snippet_lower
+    )
+    
+    # Se o nome de usuário não aparece em lugar nenhum, provavelmente é de outro perfil
+    if not usuario_mencionado:
+        print(f"    [Filtro] Descartado post suspeito (autor não confirmado): {item.get('link')}")
+        return False, ""
+        
+    # 3. Limpar a legenda para remover boilerplates do Instagram
+    boilerplates = [
+        r"\d+\s*(?:followers|seguidores)",
+        r"\d+\s*(?:following|seguindo)",
+        r"\d+\s*(?:posts|publicações)",
+        r"see photos and videos from",
+        r"assista a fotos e vídeos de",
+        r"create an account or log in",
+        r"crie uma conta ou entre",
+        r"instagram photos and videos",
+        r"fotos e vídeos do instagram",
+        r"insira uma legenda",
+        r"photo shared by",
+        r"foto compartilhada por"
+    ]
+    
+    for bp in boilerplates:
+        if re.search(bp, snippet_lower):
+            if len(snippet) < 120:
+                print(f"    [Filtro] Descartado snippet de perfil genérico: {snippet}")
+                return False, ""
+                
+    # 4. Tentar extrair a legenda real após o "@usuario no Instagram:" ou similar
+    marcas_separacao = [
+        r"on instagram\s*:\s*",
+        r"no instagram\s*:\s*",
+        r"in instagram\s*:\s*",
+        r"instagram\s*:\s*",
+        r"-\s*@?\w+\s*:\s*"
+    ]
+    
+    legenda_extraida = snippet
+    for marca in marcas_separacao:
+        partes = re.split(marca, snippet, flags=re.IGNORECASE)
+        if len(partes) > 1:
+            legenda_extraida = partes[1].strip()
+            break
+            
+    legenda_extraida = re.sub(r'^["\'\s—\-–]+|["\'\s—\-–]+$', '', legenda_extraida)
+    
+    if not legenda_extraida or legenda_extraida in ['...', '..', '.']:
+        if "on instagram:" in title or "no instagram:" in title:
+            partes_title = re.split(r'instagram\s*:\s*', title, flags=re.IGNORECASE)
+            if len(partes_title) > 1:
+                legenda_extraida = partes_title[1].strip()
+                legenda_extraida = re.sub(r'^["\'\s—\-–]+|["\'\s—\-–]+$', '', legenda_extraida)
+        
+        if not legenda_extraida or legenda_extraida in ['...', '..', '.']:
+            legenda_extraida = "Publicação sem legenda textual."
+            
+    return True, legenda_extraida
+
 def salvar_post(item, campus, user, existentes):
     link = item.get('link', '')
     if not link: return False
@@ -287,6 +371,10 @@ def salvar_post(item, campus, user, existentes):
     if not shortcode or shortcode in existentes: 
         return False
 
+    valido, legenda_limpa = validar_autor_e_legenda(item, user)
+    if not valido:
+        return False
+
     date_str = item.get('date', '')
     dt_objeto = parse_relative_date(date_str)
     
@@ -308,7 +396,7 @@ def salvar_post(item, campus, user, existentes):
     registro = {
         "campus": campus, "unidade": user, "shortcode": shortcode,
         "data": dt_objeto.strftime('%d/%m/%Y %H:%M'),
-        "legenda": f'"{item.get("snippet", "").replace(chr(10), " ").replace(chr(34), chr(39))}"',
+        "legenda": f'"{legenda_limpa.replace(chr(10), " ").replace(chr(34), chr(39))}"',
         "link": link, "img_url": img_url,
         "dia_semana": dt_objeto.weekday(), "mes": dt_objeto.month,
         "tipo": tipo
@@ -326,12 +414,60 @@ def salvar_post(item, campus, user, existentes):
     existentes.add(shortcode)
     return True
 
+def consolidar_publicacoes_por_ano():
+    """
+    Consolida todos os CSVs individuais de cada campus em um único arquivo
+    por ano na raiz da pasta data/ (ex: data/publicacoes_2025.csv) para carregamento rápido no HTML.
+    """
+    if not os.path.exists("data"):
+        return
+        
+    dados_por_ano = {}
+    
+    # Percorre a pasta data/ em busca dos arquivos de cada campus
+    for root, dirs, files in os.walk("data"):
+        if root == "data":
+            continue
+        for f in files:
+            if f.endswith('.csv') and not f.startswith('publicacoes_'):
+                caminho_arq = os.path.join(root, f)
+                try:
+                    df_temp = pd.read_csv(caminho_arq)
+                    df_temp = df_temp[df_temp['shortcode'].astype(str) != 'placeholder']
+                    if df_temp.empty:
+                        continue
+                        
+                    parts = f.split('_')
+                    ano = parts[-1].replace('.csv', '')
+                    
+                    if ano not in dados_por_ano:
+                        dados_por_ano[ano] = []
+                    dados_por_ano[ano].append(df_temp)
+                except Exception as e:
+                    print(f"Erro ao ler {caminho_arq} para consolidação: {e}")
+                    
+    for ano, dfs in dados_por_ano.items():
+        if dfs:
+            df_consolidado = pd.concat(dfs, ignore_index=True)
+            try:
+                df_consolidado['data_dt'] = pd.to_datetime(df_consolidado['data'], format='%d/%m/%Y %H:%M', errors='coerce')
+                df_consolidado = df_consolidado.dropna(subset=['data_dt']).sort_values('data_dt', ascending=False)
+                df_consolidado = df_consolidado.drop(columns=['data_dt'])
+            except:
+                pass
+            
+            caminho_consolidado = os.path.join("data", f"publicacoes_{ano}.csv")
+            df_consolidado.to_csv(caminho_consolidado, index=False, header=True, encoding='utf-8-sig', quoting=1)
+            print(f"Consolidado anual gerado: {caminho_consolidado} ({len(df_consolidado)} posts)")
+
 def gerar_metricas():
     list_df = []
     if os.path.exists("data"):
         for root, dirs, files in os.walk("data"):
+            if root == "data":
+                continue
             for f in files:
-                if f.endswith('.csv'):
+                if f.endswith('.csv') and not f.startswith('publicacoes_'):
                     try:
                         df_temp = pd.read_csv(os.path.join(root, f))
                         df_temp = df_temp[df_temp['shortcode'].astype(str) != 'placeholder']
@@ -476,6 +612,7 @@ def get_data_serper_images(username):
             if 'instagram.com' in link and any(x in link for x in ['/p/', '/reels/', '/reel/']):
                 formatted.append({
                     'link': link,
+                    'title': img.get('title', ''),
                     'snippet': img.get('title', ''),
                     'date': "" # Imagens raramente têm data
                 })
@@ -550,6 +687,7 @@ def executar():
         print(f"  -> {novos} novos posts únicos salvos.")
         time.sleep(3) # Pausa estratégica
 
+    consolidar_publicacoes_por_ano()
     gerar_metricas()
 
 

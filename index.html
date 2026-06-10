@@ -990,34 +990,34 @@
             
             allPostsCached = [];
 
-            // Load data for all units in parallel
-            const promises = CAMPUS_LIST.map(async (unit) => {
-                try {
-                    const resp = await fetch(`data/${unit}/${unit}_${year}.csv`);
-                    if (!resp.ok) return;
-                    const text = await resp.text();
-                    const lines = text.split('\n').slice(1).filter(l => l.trim());
-                    
-                    lines.forEach(line => {
-                        const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(p => p.replace(/^"|"$/g, ''));
-                        if (c[2] && c[2] !== 'placeholder') {
-                            allPostsCached.push({
-                                campus: c[0] || unit,
-                                unidade: c[1] || '',
-                                shortcode: c[2],
-                                date: c[3] || '',
-                                caption: c[4] || '',
-                                link: c[5] || '#',
-                                tipo: c[9] || 'Post'
-                            });
-                        }
-                    });
-                } catch(e) {
-                    console.warn(`Erro ao carregar CSV de ${unit}`, e);
+            try {
+                const resp = await fetch(`data/publicacoes_${year}.csv`);
+                if (!resp.ok) {
+                    grid.innerHTML = '<div class="empty-state"><h4>Nenhuma publicação encontrada</h4><p>Execute o scraper para consolidar os dados anuais.</p></div>';
+                    return;
                 }
-            });
-
-            await Promise.all(promises);
+                const text = await resp.text();
+                const lines = text.split('\n').slice(1).filter(l => l.trim());
+                
+                lines.forEach(line => {
+                    // Split por vírgula que não esteja dentro de aspas duplas
+                    const c = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(p => p.replace(/^"|"$/g, ''));
+                    if (c[2] && c[2] !== 'placeholder') {
+                        allPostsCached.push({
+                            campus: c[0] || '',
+                            unidade: c[1] || '',
+                            shortcode: c[2],
+                            date: c[3] || '',
+                            caption: c[4] || '',
+                            link: c[5] || '#',
+                            tipo: c[9] || 'Post'
+                        });
+                    }
+                });
+            } catch(e) {
+                console.error(`Erro ao carregar CSV consolidado de ${year}`, e);
+                grid.innerHTML = `<div class="empty-state"><h4>Erro ao carregar publicações</h4><p>${e.message}</p></div>`;
+            }
 
             // Sort posts by date descending
             allPostsCached.sort((a, b) => {
