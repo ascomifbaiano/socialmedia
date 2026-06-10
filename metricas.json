@@ -1,0 +1,357 @@
+{
+    "atualizado_em": "10/06/2026 14:28",
+    "total_posts": 27,
+    "total_mes_atual": 1,
+    "ranking": {
+        "Teixeira_de_Freitas": 2,
+        "Serrinha": 2,
+        "Valença": 2,
+        "Itaberaba": 2,
+        "Reitoria": 2,
+        "Xique_Xique": 2,
+        "Governador_Mangabeira": 2,
+        "Santa_Inês": 2,
+        "Alagoinhas": 2,
+        "Itapetinga": 2,
+        "Catu": 2,
+        "Bom_Jesus_da_Lapa": 2,
+        "Uruçuca": 2,
+        "Guanambi": 1
+    },
+    "ranking_detalhado": {
+        "Reitoria": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Alagoinhas": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Bom_Jesus_da_Lapa": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Catu": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Governador_Mangabeira": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Guanambi": {
+            "Post": 1,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Itaberaba": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Itapetinga": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Santa_Inês": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Senhor_do_Bonfim": {
+            "Post": 0,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Serrinha": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Teixeira_de_Freitas": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Uruçuca": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Valença": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        },
+        "Xique_Xique": {
+            "Post": 2,
+            "Reel": 0,
+            "Story": 0
+        }
+    },
+    "publicacoes_recentes": {
+        "Reitoria": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Alagoinhas": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Bom_Jesus_da_Lapa": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Catu": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Governador_Mangabeira": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Guanambi": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Itaberaba": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Itapetinga": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Santa_Inês": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Senhor_do_Bonfim": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Serrinha": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Teixeira_de_Freitas": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Uruçuca": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Valença": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        },
+        "Xique_Xique": {
+            "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            }
+        }
+    },
+    "tipo_geral": {
+        "Post": 27
+    },
+    "ritmo_publicacao": {},
+    "mensal": {
+        "2025-01": 2,
+        "2025-02": 3,
+        "2025-03": 1,
+        "2025-04": 1,
+        "2025-06": 1,
+        "2025-09": 2,
+        "2025-10": 2,
+        "2025-11": 1,
+        "2025-12": 1,
+        "2026-01": 3,
+        "2026-02": 3,
+        "2026-03": 1,
+        "2026-04": 5,
+        "2026-05": 1
+    },
+    "dias_produtivos": {
+        "0": 6,
+        "3": 6,
+        "1": 5,
+        "6": 3,
+        "2": 3,
+        "5": 2,
+        "4": 2
+    },
+    "inatividade": {
+        "Reitoria": 58,
+        "Alagoinhas": 104,
+        "Bom_Jesus_da_Lapa": 147,
+        "Catu": 142,
+        "Governador_Mangabeira": 78,
+        "Guanambi": 491,
+        "Itaberaba": 46,
+        "Itapetinga": 108,
+        "Santa_Inês": 103,
+        "Senhor_do_Bonfim": 999,
+        "Serrinha": 41,
+        "Teixeira_de_Freitas": 36,
+        "Uruçuca": 147,
+        "Valença": 44,
+        "Xique_Xique": 62
+    },
+    "dia_mais_produtivo": "Segunda"
+}
