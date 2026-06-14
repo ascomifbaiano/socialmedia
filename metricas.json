@@ -1,23 +1,23 @@
 {
-    "atualizado_em": "13/06/2026 13:31",
-    "total_posts": 40,
+    "atualizado_em": "14/06/2026 13:44",
+    "total_posts": 43,
     "total_mes_atual": 4,
     "ranking": {
         "Itapetinga": 5,
         "Xique_Xique": 5,
-        "Governador_Mangabeira": 3,
-        "Itaberaba": 3,
+        "Governador_Mangabeira": 4,
+        "Itaberaba": 4,
         "Uruçuca": 3,
         "Valença": 3,
-        "Guanambi": 2,
+        "Bom_Jesus_da_Lapa": 3,
         "Senhor_do_Bonfim": 2,
+        "Guanambi": 2,
         "Teixeira_de_Freitas": 2,
         "Serrinha": 2,
         "Reitoria": 2,
         "Santa_Inês": 2,
         "Alagoinhas": 2,
-        "Catu": 2,
-        "Bom_Jesus_da_Lapa": 2
+        "Catu": 2
     },
     "ranking_detalhado": {
         "Reitoria": {
@@ -31,7 +31,7 @@
             "Story": 0
         },
         "Bom_Jesus_da_Lapa": {
-            "Post": 2,
+            "Post": 3,
             "Reel": 0,
             "Story": 0
         },
@@ -42,7 +42,7 @@
         },
         "Governador_Mangabeira": {
             "Post": 3,
-            "Reel": 0,
+            "Reel": 1,
             "Story": 0
         },
         "Guanambi": {
@@ -51,7 +51,7 @@
             "Story": 0
         },
         "Itaberaba": {
-            "Post": 2,
+            "Post": 3,
             "Reel": 1,
             "Story": 0
         },
@@ -309,13 +309,13 @@
         }
     },
     "tipo_geral": {
-        "Post": 30,
-        "Reel": 10
+        "Post": 32,
+        "Reel": 11
     },
     "ritmo_publicacao": {
-        "2026-05-15": 1,
         "2026-05-18": 3,
         "2026-05-21": 1,
+        "2026-05-22": 1,
         "2026-05-26": 1,
         "2026-05-29": 2,
         "2026-06-03": 1,
@@ -336,34 +336,34 @@
         "2026-02": 3,
         "2026-03": 1,
         "2026-04": 5,
-        "2026-05": 11,
+        "2026-05": 14,
         "2026-06": 3
     },
     "dias_produtivos": {
         "3": 9,
         "0": 9,
+        "4": 8,
         "1": 7,
-        "4": 5,
         "2": 5,
         "6": 3,
         "5": 2
     },
     "inatividade": {
-        "Reitoria": 61,
-        "Alagoinhas": 107,
-        "Bom_Jesus_da_Lapa": 150,
-        "Catu": 145,
-        "Governador_Mangabeira": 2,
-        "Guanambi": 18,
-        "Itaberaba": 15,
-        "Itapetinga": 1,
-        "Santa_Inês": 106,
-        "Senhor_do_Bonfim": 26,
-        "Serrinha": 44,
-        "Teixeira_de_Freitas": 39,
-        "Uruçuca": 26,
-        "Valença": 30,
-        "Xique_Xique": 10
+        "Reitoria": 62,
+        "Alagoinhas": 108,
+        "Bom_Jesus_da_Lapa": 30,
+        "Catu": 146,
+        "Governador_Mangabeira": 3,
+        "Guanambi": 19,
+        "Itaberaba": 16,
+        "Itapetinga": 2,
+        "Santa_Inês": 107,
+        "Senhor_do_Bonfim": 27,
+        "Serrinha": 45,
+        "Teixeira_de_Freitas": 40,
+        "Uruçuca": 27,
+        "Valença": 31,
+        "Xique_Xique": 11
     },
     "dia_mais_produtivo": "Quinta"
 }
