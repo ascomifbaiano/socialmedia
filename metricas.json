@@ -1,22 +1,22 @@
 {
-    "atualizado_em": "14/06/2026 13:44",
-    "total_posts": 43,
-    "total_mes_atual": 4,
+    "atualizado_em": "15/06/2026 17:04",
+    "total_posts": 48,
+    "total_mes_atual": 6,
     "ranking": {
-        "Itapetinga": 5,
-        "Xique_Xique": 5,
-        "Governador_Mangabeira": 4,
+        "Itapetinga": 6,
+        "Xique_Xique": 6,
+        "Governador_Mangabeira": 5,
         "Itaberaba": 4,
+        "Alagoinhas": 3,
+        "Guanambi": 3,
         "Uruçuca": 3,
         "Valença": 3,
         "Bom_Jesus_da_Lapa": 3,
         "Senhor_do_Bonfim": 2,
-        "Guanambi": 2,
         "Teixeira_de_Freitas": 2,
         "Serrinha": 2,
         "Reitoria": 2,
         "Santa_Inês": 2,
-        "Alagoinhas": 2,
         "Catu": 2
     },
     "ranking_detalhado": {
@@ -27,7 +27,7 @@
         },
         "Alagoinhas": {
             "Post": 2,
-            "Reel": 0,
+            "Reel": 1,
             "Story": 0
         },
         "Bom_Jesus_da_Lapa": {
@@ -41,13 +41,13 @@
             "Story": 0
         },
         "Governador_Mangabeira": {
-            "Post": 3,
+            "Post": 4,
             "Reel": 1,
             "Story": 0
         },
         "Guanambi": {
             "Post": 1,
-            "Reel": 1,
+            "Reel": 2,
             "Story": 0
         },
         "Itaberaba": {
@@ -57,7 +57,7 @@
         },
         "Itapetinga": {
             "Post": 3,
-            "Reel": 2,
+            "Reel": 3,
             "Story": 0
         },
         "Santa_Inês": {
@@ -91,7 +91,7 @@
             "Story": 0
         },
         "Xique_Xique": {
-            "Post": 2,
+            "Post": 3,
             "Reel": 3,
             "Story": 0
         }
@@ -198,9 +198,15 @@
         "Itapetinga": {
             "hoje": {
                 "Post": 0,
-                "Reel": 0,
+                "Reel": 1,
                 "Story": 0,
-                "links": []
+                "links": [
+                    {
+                        "link": "https://www.instagram.com/ifbaiano_itapetinga/reels/?hl=zh-cn",
+                        "tipo": "Reel",
+                        "data": "15/06/2026 17:02"
+                    }
+                ]
             },
             "ontem": {
                 "Post": 0,
@@ -309,18 +315,22 @@
         }
     },
     "tipo_geral": {
-        "Post": 32,
-        "Reel": 11
+        "Post": 34,
+        "Reel": 14
     },
     "ritmo_publicacao": {
         "2026-05-18": 3,
         "2026-05-21": 1,
         "2026-05-22": 1,
         "2026-05-26": 1,
+        "2026-05-27": 1,
         "2026-05-29": 2,
+        "2026-05-30": 2,
         "2026-06-03": 1,
         "2026-06-10": 1,
-        "2026-06-11": 1
+        "2026-06-11": 1,
+        "2026-06-12": 1,
+        "2026-06-15": 1
     },
     "mensal": {
         "2025-01": 2,
@@ -336,34 +346,34 @@
         "2026-02": 3,
         "2026-03": 1,
         "2026-04": 5,
-        "2026-05": 14,
-        "2026-06": 3
+        "2026-05": 17,
+        "2026-06": 5
     },
     "dias_produtivos": {
+        "0": 10,
+        "4": 9,
         "3": 9,
-        "0": 9,
-        "4": 8,
         "1": 7,
-        "2": 5,
-        "6": 3,
-        "5": 2
+        "2": 6,
+        "5": 4,
+        "6": 3
     },
     "inatividade": {
-        "Reitoria": 62,
-        "Alagoinhas": 108,
-        "Bom_Jesus_da_Lapa": 30,
-        "Catu": 146,
+        "Reitoria": 63,
+        "Alagoinhas": 16,
+        "Bom_Jesus_da_Lapa": 31,
+        "Catu": 147,
         "Governador_Mangabeira": 3,
         "Guanambi": 19,
-        "Itaberaba": 16,
-        "Itapetinga": 2,
-        "Santa_Inês": 107,
-        "Senhor_do_Bonfim": 27,
-        "Serrinha": 45,
-        "Teixeira_de_Freitas": 40,
-        "Uruçuca": 27,
-        "Valença": 31,
-        "Xique_Xique": 11
+        "Itaberaba": 17,
+        "Itapetinga": 0,
+        "Santa_Inês": 108,
+        "Senhor_do_Bonfim": 28,
+        "Serrinha": 46,
+        "Teixeira_de_Freitas": 41,
+        "Uruçuca": 28,
+        "Valença": 32,
+        "Xique_Xique": 12
     },
-    "dia_mais_produtivo": "Quinta"
+    "dia_mais_produtivo": "Segunda"
 }
