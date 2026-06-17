@@ -1,20 +1,20 @@
 {
-    "atualizado_em": "16/06/2026 16:29",
-    "total_posts": 51,
-    "total_mes_atual": 7,
+    "atualizado_em": "17/06/2026 14:57",
+    "total_posts": 53,
+    "total_mes_atual": 9,
     "ranking": {
         "Itapetinga": 6,
         "Xique_Xique": 6,
         "Governador_Mangabeira": 5,
+        "Valença": 4,
         "Senhor_do_Bonfim": 4,
-        "Itaberaba": 4,
         "Uruçuca": 4,
+        "Itaberaba": 4,
         "Alagoinhas": 3,
+        "Serrinha": 3,
         "Guanambi": 3,
         "Bom_Jesus_da_Lapa": 3,
-        "Valença": 3,
         "Teixeira_de_Freitas": 2,
-        "Serrinha": 2,
         "Reitoria": 2,
         "Santa_Inês": 2,
         "Catu": 2
@@ -72,7 +72,7 @@
         },
         "Serrinha": {
             "Post": 2,
-            "Reel": 0,
+            "Reel": 1,
             "Story": 0
         },
         "Teixeira_de_Freitas": {
@@ -86,7 +86,7 @@
             "Story": 0
         },
         "Valença": {
-            "Post": 2,
+            "Post": 3,
             "Reel": 1,
             "Story": 0
         },
@@ -204,15 +204,9 @@
             },
             "ontem": {
                 "Post": 0,
-                "Reel": 1,
+                "Reel": 0,
                 "Story": 0,
-                "links": [
-                    {
-                        "link": "https://www.instagram.com/ifbaiano_itapetinga/reels/?hl=zh-cn",
-                        "tipo": "Reel",
-                        "data": "15/06/2026 17:02"
-                    }
-                ]
+                "links": []
             }
         },
         "Santa_Inês": {
@@ -315,11 +309,10 @@
         }
     },
     "tipo_geral": {
-        "Post": 35,
-        "Reel": 16
+        "Post": 36,
+        "Reel": 17
     },
     "ritmo_publicacao": {
-        "2026-05-18": 3,
         "2026-05-21": 1,
         "2026-05-22": 1,
         "2026-05-26": 2,
@@ -327,11 +320,11 @@
         "2026-05-28": 1,
         "2026-05-29": 2,
         "2026-05-30": 2,
-        "2026-06-03": 1,
+        "2026-06-03": 2,
         "2026-06-10": 1,
         "2026-06-11": 1,
         "2026-06-12": 2,
-        "2026-06-15": 1
+        "2026-06-15": 2
     },
     "mensal": {
         "2025-01": 2,
@@ -348,33 +341,33 @@
         "2026-03": 1,
         "2026-04": 5,
         "2026-05": 19,
-        "2026-06": 6
+        "2026-06": 8
     },
     "dias_produtivos": {
-        "0": 10,
+        "0": 11,
         "4": 10,
         "3": 10,
         "1": 8,
-        "2": 6,
+        "2": 7,
         "5": 4,
         "6": 3
     },
     "inatividade": {
-        "Reitoria": 64,
-        "Alagoinhas": 17,
-        "Bom_Jesus_da_Lapa": 32,
-        "Catu": 148,
-        "Governador_Mangabeira": 3,
-        "Guanambi": 20,
-        "Itaberaba": 18,
-        "Itapetinga": 0,
-        "Santa_Inês": 109,
+        "Reitoria": 65,
+        "Alagoinhas": 18,
+        "Bom_Jesus_da_Lapa": 33,
+        "Catu": 149,
+        "Governador_Mangabeira": 4,
+        "Guanambi": 21,
+        "Itaberaba": 19,
+        "Itapetinga": 1,
+        "Santa_Inês": 110,
         "Senhor_do_Bonfim": 4,
-        "Serrinha": 47,
-        "Teixeira_de_Freitas": 42,
+        "Serrinha": 2,
+        "Teixeira_de_Freitas": 43,
         "Uruçuca": 21,
-        "Valença": 33,
-        "Xique_Xique": 13
+        "Valença": 14,
+        "Xique_Xique": 14
     },
     "dia_mais_produtivo": "Segunda"
 }
