@@ -1,5 +1,5 @@
 {
-    "atualizado_em": "18/06/2026 14:52",
+    "atualizado_em": "19/06/2026 14:47",
     "total_posts": 55,
     "total_mes_atual": 11,
     "ranking": {
@@ -198,6 +198,12 @@
         "Itapetinga": {
             "hoje": {
                 "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
+                "Post": 0,
                 "Reel": 1,
                 "Story": 0,
                 "links": [
@@ -207,12 +213,6 @@
                         "data": "18/06/2026 14:51"
                     }
                 ]
-            },
-            "ontem": {
-                "Post": 0,
-                "Reel": 0,
-                "Story": 0,
-                "links": []
             }
         },
         "Santa_Inês": {
@@ -361,21 +361,21 @@
         "6": 3
     },
     "inatividade": {
-        "Reitoria": 66,
-        "Alagoinhas": 19,
-        "Bom_Jesus_da_Lapa": 34,
-        "Catu": 150,
-        "Governador_Mangabeira": 5,
-        "Guanambi": 22,
-        "Itaberaba": 20,
+        "Reitoria": 67,
+        "Alagoinhas": 20,
+        "Bom_Jesus_da_Lapa": 35,
+        "Catu": 151,
+        "Governador_Mangabeira": 6,
+        "Guanambi": 23,
+        "Itaberaba": 21,
         "Itapetinga": 0,
-        "Santa_Inês": 111,
-        "Senhor_do_Bonfim": 5,
-        "Serrinha": 2,
-        "Teixeira_de_Freitas": 44,
-        "Uruçuca": 22,
-        "Valença": 13,
-        "Xique_Xique": 15
+        "Santa_Inês": 112,
+        "Senhor_do_Bonfim": 6,
+        "Serrinha": 3,
+        "Teixeira_de_Freitas": 45,
+        "Uruçuca": 23,
+        "Valença": 14,
+        "Xique_Xique": 16
     },
     "dia_mais_produtivo": "Quinta"
 }
