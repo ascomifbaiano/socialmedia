@@ -1,28 +1,28 @@
 {
-    "atualizado_em": "21/06/2026 13:53",
-    "total_posts": 57,
-    "total_mes_atual": 11,
+    "atualizado_em": "22/06/2026 16:33",
+    "total_posts": 60,
+    "total_mes_atual": 14,
     "ranking": {
         "Itapetinga": 8,
         "Xique_Xique": 6,
-        "Governador_Mangabeira": 5,
         "Valença": 5,
         "Itaberaba": 5,
-        "Uruçuca": 4,
+        "Governador_Mangabeira": 5,
         "Senhor_do_Bonfim": 4,
-        "Alagoinhas": 3,
+        "Teixeira_de_Freitas": 4,
+        "Uruçuca": 4,
+        "Reitoria": 3,
         "Serrinha": 3,
+        "Alagoinhas": 3,
         "Guanambi": 3,
         "Bom_Jesus_da_Lapa": 3,
-        "Teixeira_de_Freitas": 2,
-        "Reitoria": 2,
         "Santa_Inês": 2,
         "Catu": 2
     },
     "ranking_detalhado": {
         "Reitoria": {
             "Post": 2,
-            "Reel": 0,
+            "Reel": 1,
             "Story": 0
         },
         "Alagoinhas": {
@@ -76,7 +76,7 @@
             "Story": 0
         },
         "Teixeira_de_Freitas": {
-            "Post": 2,
+            "Post": 4,
             "Reel": 0,
             "Story": 0
         },
@@ -106,9 +106,15 @@
             },
             "ontem": {
                 "Post": 0,
-                "Reel": 0,
+                "Reel": 1,
                 "Story": 0,
-                "links": []
+                "links": [
+                    {
+                        "link": "https://www.instagram.com/reel/DZ2N_VVj3si/",
+                        "tipo": "Reel",
+                        "data": "21/06/2026 16:30"
+                    }
+                ]
             }
         },
         "Alagoinhas": {
@@ -253,10 +259,21 @@
         },
         "Teixeira_de_Freitas": {
             "hoje": {
-                "Post": 0,
+                "Post": 2,
                 "Reel": 0,
                 "Story": 0,
-                "links": []
+                "links": [
+                    {
+                        "link": "https://www.instagram.com/p/DJ7cxidyCu4/",
+                        "tipo": "Post",
+                        "data": "22/06/2026 16:32"
+                    },
+                    {
+                        "link": "https://www.instagram.com/p/DICDVKwTcGB/",
+                        "tipo": "Post",
+                        "data": "22/06/2026 16:32"
+                    }
+                ]
             },
             "ontem": {
                 "Post": 0,
@@ -309,8 +326,8 @@
         }
     },
     "tipo_geral": {
-        "Post": 38,
-        "Reel": 19
+        "Post": 40,
+        "Reel": 20
     },
     "ritmo_publicacao": {
         "2026-05-25": 1,
@@ -325,7 +342,9 @@
         "2026-06-11": 1,
         "2026-06-12": 2,
         "2026-06-15": 2,
-        "2026-06-18": 1
+        "2026-06-18": 1,
+        "2026-06-21": 1,
+        "2026-06-22": 2
     },
     "mensal": {
         "2025-01": 2,
@@ -342,33 +361,33 @@
         "2026-03": 1,
         "2026-04": 5,
         "2026-05": 21,
-        "2026-06": 10
+        "2026-06": 13
     },
     "dias_produtivos": {
-        "0": 12,
+        "0": 14,
         "4": 12,
         "3": 11,
         "1": 8,
         "2": 7,
-        "5": 4,
-        "6": 3
+        "6": 4,
+        "5": 4
     },
     "inatividade": {
-        "Reitoria": 69,
-        "Alagoinhas": 22,
-        "Bom_Jesus_da_Lapa": 37,
-        "Catu": 153,
-        "Governador_Mangabeira": 8,
-        "Guanambi": 25,
-        "Itaberaba": 23,
-        "Itapetinga": 2,
-        "Santa_Inês": 114,
-        "Senhor_do_Bonfim": 8,
-        "Serrinha": 5,
-        "Teixeira_de_Freitas": 47,
-        "Uruçuca": 25,
-        "Valença": 16,
-        "Xique_Xique": 18
+        "Reitoria": 1,
+        "Alagoinhas": 23,
+        "Bom_Jesus_da_Lapa": 38,
+        "Catu": 154,
+        "Governador_Mangabeira": 9,
+        "Guanambi": 26,
+        "Itaberaba": 24,
+        "Itapetinga": 4,
+        "Santa_Inês": 115,
+        "Senhor_do_Bonfim": 10,
+        "Serrinha": 7,
+        "Teixeira_de_Freitas": 0,
+        "Uruçuca": 27,
+        "Valença": 17,
+        "Xique_Xique": 19
     },
     "dia_mais_produtivo": "Segunda"
 }
