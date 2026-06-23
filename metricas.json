@@ -1,5 +1,5 @@
 {
-    "atualizado_em": "22/06/2026 16:33",
+    "atualizado_em": "23/06/2026 14:32",
     "total_posts": 60,
     "total_mes_atual": 14,
     "ranking": {
@@ -106,15 +106,9 @@
             },
             "ontem": {
                 "Post": 0,
-                "Reel": 1,
+                "Reel": 0,
                 "Story": 0,
-                "links": [
-                    {
-                        "link": "https://www.instagram.com/reel/DZ2N_VVj3si/",
-                        "tipo": "Reel",
-                        "data": "21/06/2026 16:30"
-                    }
-                ]
+                "links": []
             }
         },
         "Alagoinhas": {
@@ -259,6 +253,12 @@
         },
         "Teixeira_de_Freitas": {
             "hoje": {
+                "Post": 0,
+                "Reel": 0,
+                "Story": 0,
+                "links": []
+            },
+            "ontem": {
                 "Post": 2,
                 "Reel": 0,
                 "Story": 0,
@@ -274,12 +274,6 @@
                         "data": "22/06/2026 16:32"
                     }
                 ]
-            },
-            "ontem": {
-                "Post": 0,
-                "Reel": 0,
-                "Story": 0,
-                "links": []
             }
         },
         "Uruçuca": {
@@ -374,20 +368,20 @@
     },
     "inatividade": {
         "Reitoria": 1,
-        "Alagoinhas": 23,
-        "Bom_Jesus_da_Lapa": 38,
-        "Catu": 154,
-        "Governador_Mangabeira": 9,
-        "Guanambi": 26,
-        "Itaberaba": 24,
+        "Alagoinhas": 24,
+        "Bom_Jesus_da_Lapa": 39,
+        "Catu": 155,
+        "Governador_Mangabeira": 10,
+        "Guanambi": 27,
+        "Itaberaba": 25,
         "Itapetinga": 4,
-        "Santa_Inês": 115,
+        "Santa_Inês": 116,
         "Senhor_do_Bonfim": 10,
         "Serrinha": 7,
         "Teixeira_de_Freitas": 0,
         "Uruçuca": 27,
-        "Valença": 17,
-        "Xique_Xique": 19
+        "Valença": 18,
+        "Xique_Xique": 20
     },
     "dia_mais_produtivo": "Segunda"
 }
