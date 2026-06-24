@@ -1,5 +1,5 @@
 {
-    "atualizado_em": "23/06/2026 14:32",
+    "atualizado_em": "24/06/2026 14:10",
     "total_posts": 60,
     "total_mes_atual": 14,
     "ranking": {
@@ -259,21 +259,10 @@
                 "links": []
             },
             "ontem": {
-                "Post": 2,
+                "Post": 0,
                 "Reel": 0,
                 "Story": 0,
-                "links": [
-                    {
-                        "link": "https://www.instagram.com/p/DJ7cxidyCu4/",
-                        "tipo": "Post",
-                        "data": "22/06/2026 16:32"
-                    },
-                    {
-                        "link": "https://www.instagram.com/p/DICDVKwTcGB/",
-                        "tipo": "Post",
-                        "data": "22/06/2026 16:32"
-                    }
-                ]
+                "links": []
             }
         },
         "Uruçuca": {
@@ -324,7 +313,6 @@
         "Reel": 20
     },
     "ritmo_publicacao": {
-        "2026-05-25": 1,
         "2026-05-26": 2,
         "2026-05-27": 1,
         "2026-05-28": 1,
@@ -367,21 +355,21 @@
         "5": 4
     },
     "inatividade": {
-        "Reitoria": 1,
-        "Alagoinhas": 24,
-        "Bom_Jesus_da_Lapa": 39,
-        "Catu": 155,
-        "Governador_Mangabeira": 10,
-        "Guanambi": 27,
-        "Itaberaba": 25,
-        "Itapetinga": 4,
-        "Santa_Inês": 116,
-        "Senhor_do_Bonfim": 10,
-        "Serrinha": 7,
-        "Teixeira_de_Freitas": 0,
-        "Uruçuca": 27,
-        "Valença": 18,
-        "Xique_Xique": 20
+        "Reitoria": 2,
+        "Alagoinhas": 25,
+        "Bom_Jesus_da_Lapa": 40,
+        "Catu": 156,
+        "Governador_Mangabeira": 11,
+        "Guanambi": 28,
+        "Itaberaba": 26,
+        "Itapetinga": 5,
+        "Santa_Inês": 117,
+        "Senhor_do_Bonfim": 11,
+        "Serrinha": 8,
+        "Teixeira_de_Freitas": 1,
+        "Uruçuca": 28,
+        "Valença": 19,
+        "Xique_Xique": 21
     },
     "dia_mais_produtivo": "Segunda"
 }
