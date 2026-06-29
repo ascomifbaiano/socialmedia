@@ -1,5 +1,5 @@
 {
-    "atualizado_em": "28/06/2026 13:20",
+    "atualizado_em": "29/06/2026 15:34",
     "total_posts": 60,
     "total_mes_atual": 14,
     "ranking": {
@@ -313,7 +313,6 @@
         "Reel": 20
     },
     "ritmo_publicacao": {
-        "2026-05-30": 2,
         "2026-06-03": 2,
         "2026-06-05": 1,
         "2026-06-10": 1,
@@ -351,21 +350,21 @@
         "5": 4
     },
     "inatividade": {
-        "Reitoria": 6,
-        "Alagoinhas": 29,
-        "Bom_Jesus_da_Lapa": 43,
-        "Catu": 160,
-        "Governador_Mangabeira": 15,
-        "Guanambi": 32,
-        "Itaberaba": 30,
-        "Itapetinga": 9,
-        "Santa_Inês": 121,
-        "Senhor_do_Bonfim": 15,
-        "Serrinha": 12,
-        "Teixeira_de_Freitas": 5,
-        "Uruçuca": 32,
-        "Valença": 23,
-        "Xique_Xique": 25
+        "Reitoria": 7,
+        "Alagoinhas": 30,
+        "Bom_Jesus_da_Lapa": 45,
+        "Catu": 161,
+        "Governador_Mangabeira": 16,
+        "Guanambi": 33,
+        "Itaberaba": 31,
+        "Itapetinga": 11,
+        "Santa_Inês": 122,
+        "Senhor_do_Bonfim": 16,
+        "Serrinha": 14,
+        "Teixeira_de_Freitas": 6,
+        "Uruçuca": 33,
+        "Valença": 24,
+        "Xique_Xique": 26
     },
     "dia_mais_produtivo": "Segunda"
 }
