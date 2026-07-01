@@ -1,7 +1,7 @@
 {
-    "atualizado_em": "30/06/2026 14:00",
+    "atualizado_em": "01/07/2026 14:13",
     "total_posts": 60,
-    "total_mes_atual": 14,
+    "total_mes_atual": 0,
     "ranking": {
         "Itapetinga": 8,
         "Xique_Xique": 6,
@@ -350,21 +350,21 @@
         "5": 4
     },
     "inatividade": {
-        "Reitoria": 8,
-        "Alagoinhas": 31,
-        "Bom_Jesus_da_Lapa": 46,
-        "Catu": 162,
-        "Governador_Mangabeira": 17,
-        "Guanambi": 34,
-        "Itaberaba": 32,
-        "Itapetinga": 11,
-        "Santa_Inês": 123,
-        "Senhor_do_Bonfim": 17,
-        "Serrinha": 14,
-        "Teixeira_de_Freitas": 7,
-        "Uruçuca": 34,
-        "Valença": 25,
-        "Xique_Xique": 27
+        "Reitoria": 9,
+        "Alagoinhas": 32,
+        "Bom_Jesus_da_Lapa": 47,
+        "Catu": 163,
+        "Governador_Mangabeira": 18,
+        "Guanambi": 35,
+        "Itaberaba": 33,
+        "Itapetinga": 12,
+        "Santa_Inês": 124,
+        "Senhor_do_Bonfim": 18,
+        "Serrinha": 15,
+        "Teixeira_de_Freitas": 8,
+        "Uruçuca": 35,
+        "Valença": 26,
+        "Xique_Xique": 28
     },
     "dia_mais_produtivo": "Segunda"
 }
